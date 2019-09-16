@@ -3,11 +3,13 @@ export const webRouters = [
   {
     path: "/",
     name: "home",
-    component: () => import(/* webpackChunkName: "about" */ "@/views/Home.vue")
+    component: () =>
+      import(/* webpackChunkName: "home" */ "@/views/web/Home.vue")
   },
   {
     path: "/about",
     name: "about",
-    component: () => import(/* webpackChunkName: "about" */ "@/views/About.vue")
+    component: () =>
+      import(/* webpackChunkName: "about" */ "@/views/web/About.vue")
   }
 ];
