@@ -1,0 +1,53 @@
+// body重置
+body {
+  padding: 0;
+  margin: 0;
+  background-color: #202020;
+  * {
+    outline: none;
+  }
+}
+// 隐藏滚动条
+::-webkit-scrollbar {
+  display:none
+}
+// 错误界面
+.error {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-flow: wrap;
+  align-content: center;
+  justify-content: center;
+  .errorBox {
+    color: #fff;
+    text-align: center;
+    .banner {
+      img {
+        width: 20vw;
+        height: auto;
+      }
+    }
+    h3 {
+      margin-bottom: 10px;
+      font-weight: inherit;
+    }
+    h6 {
+      margin-top: 0;
+      font-weight: inherit;
+    }
+    .active {
+      margin-top: 30px;
+      a {
+        color: #31c5ff;
+      }
+    }
+  }
+}
+// 公共样式-管理系统-分页样式
+.sPagination {
+  width: 100%;
+  padding: 10px 0;
+  margin: 0 auto;
+  text-align: right;
+}
