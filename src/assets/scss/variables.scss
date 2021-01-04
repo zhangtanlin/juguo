@@ -1,0 +1,27 @@
+// 默认颜色
+$default-color: #F7992B;
+// 背景色
+$default-bg-color: #fff;
+// 单行超出使用省略号
+@mixin overflowEllipsis{
+  overflow: hidden;/*超出隐藏*/
+  white-space: nowrap;/*文本不会换行*/
+  text-overflow: ellipsis;/*当文本溢出包含元素时，以省略号表示超出的文本*/
+}
+// 按钮
+.btn {
+  height: 32px;
+  padding: 0 20px;
+  color: #fff;
+  background: #F7992B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  &:hover {
+    background: #e6a23c;
+  }
+  i {
+    margin-right: 5px;
+  }
+}
