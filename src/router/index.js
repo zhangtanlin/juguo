@@ -19,27 +19,27 @@ const routes = [
       {
         path: 'user',
         name: 'User',
-        component: () => import(/* webpackChunkName: "user" */ '@/views/User.vue'),
+        component: () => import(/* webpackChunkName: "user" */ '@/views/System/User.vue'),
         children: [
           {
             path: '',
             name: 'List',
-            component: () => import(/* webpackChunkName: "user" */ '@/views/User/List.vue'),
+            component: () => import(/* webpackChunkName: "user" */ '@/views/System/User/List.vue'),
           },
           {
             path: 'add',
             name: 'Add',
-            component: () => import(/* webpackChunkName: "user" */ '@/views/User/Add.vue'),
+            component: () => import(/* webpackChunkName: "user" */ '@/views/System/User/Add.vue'),
           },
           {
             path: 'edit/:id',
             name: 'Edit',
-            component: () => import(/* webpackChunkName: "user" */ '@/views/User/Edit.vue'),
+            component: () => import(/* webpackChunkName: "user" */ '@/views/System/User/Edit.vue'),
           },
           {
             path: 'show/:id',
             name: 'Show',
-            component: () => import(/* webpackChunkName: "user" */ '@/views/User/Show.vue'),
+            component: () => import(/* webpackChunkName: "user" */ '@/views/System/User/Show.vue'),
           },
         ]
       },

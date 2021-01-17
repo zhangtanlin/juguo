@@ -28,7 +28,7 @@
       </div>
     </header>
     <div class="content">
-      <aside class="aside">
+      <aside v-if="menu && menu.length" class="aside">
         <LeftMenu :menu="menu" />
       </aside>
       <main class="main">
@@ -78,19 +78,13 @@ export default {
     this.getMenu()
   },
   methods: {
-    // 头部显示/隐藏左侧边栏
-    showAside () {
-      this.isCollapse = !this.isCollapse
-      if (this.leftMenuWidth === '200px') {
-        this.leftMenuWidth = '40px'
-      } else {
-        this.leftMenuWidth = '200px'
-      }
-    },
     //获取菜单
     async getMenu() {
       const getApiMenu = await apiMenu()
-      if (Array.isArray(getApiMenu.data) && getApiMenu.data.length) {
+      if (
+        Array.isArray(getApiMenu.data) &&
+        getApiMenu.data.length
+      ) {
         this.menu = getApiMenu.data
       }
     },
