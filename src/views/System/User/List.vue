@@ -18,10 +18,6 @@
         <InputBox v-model:value="form.email" placeholder="请输入邮箱" />
       </div>
       <div class="item-box">
-        <label>年龄</label>
-        <InputBox v-model:value="form.age" placeholder="请输入年龄" />
-      </div>
-      <div class="item-box">
         <label>区域代码</label>
         <InputBox v-model:value="form.area" placeholder="请输入区域代码" />
       </div>
@@ -53,7 +49,7 @@
     />
     <div v-if="total">
       <PaginationBox
-        :page="currentPage"
+        :page="page"
         :size="pageSize"
         :total="total"
         :change-page="changePage"
@@ -97,12 +93,11 @@ export default {
         userName: '',
         phone: '',
         email: '',
-        age: '',
         area: '',
-        status: 0,
+        status: '',
       },
       // 分页
-      currentPage: 1,
+      page: 1,
       pageSize: 2,
       total: 0,
       // 弹出框是否显示
@@ -152,12 +147,12 @@ export default {
      * @function changeSize 切换每页显示的条数
      */
     changePage(page) {
-      this.currentPage = page
+      this.page = page
       this.getList()
     },
     changeSize(item) {
       if (Object.keys(item)) {
-        this.currentPage = 1
+        this.page = 1
         this.pageSize = item.value
         this.getList()
       }
@@ -166,11 +161,11 @@ export default {
     async getList() {
       const newForm = removeEmpty(this.form);
       const obj = Object.assign(newForm, {
-        currentPage: this.currentPage,
+        page: this.page,
         pageSize: this.pageSize
       });
       const getApiUsers = await apiUsers(obj)
-      if (!!getApiUsers.data || Array.isArray(getApiUsers.data.list)) {
+      if (Array.isArray(getApiUsers.data.list)) {
         this.list = getApiUsers.data.list
         this.total = Number(getApiUsers.data.total)
       }

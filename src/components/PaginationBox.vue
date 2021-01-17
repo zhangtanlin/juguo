@@ -131,7 +131,7 @@ export default {
   data() {
     let tempMimPage = 1,
       tempCountPage = Math.ceil(this.total / this.size),
-      tempMaxPage = this.selfPagesLength,
+      tempMaxPage = this.pages.length,
       tempPageArr = [];
     if (this.pagesLength > tempCountPage) {
       tempMaxPage = tempCountPage;
