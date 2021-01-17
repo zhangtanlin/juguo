@@ -1,43 +1,51 @@
 <template>
   <div class="add">
     <div class="add-box">
-      <div class="list">
-        <label for="account">用户名</label>
-        <div class="input-box">
-          <input
-            v-model="account"
-            id="account"
-            type="text"
-            placeholder="请输入用户名"
-          >
+      <form>
+        <div class="list">
+          <label for="account">用户名</label>
+          <div class="input-box">
+            <input
+              v-model="account"
+              id="account"
+              type="text"
+              name="account"
+              autocomplete="on"
+              placeholder="请输入用户名"
+            >
+          </div>
         </div>
-      </div>
-      <div class="prompt">{{ promptAccount }}</div>
-      <div class="list">
-        <label for="pwd">密码</label>
-        <div class="input-box">
-          <input
-            v-model="password"
-            id="pwd"
-            type="password"
-            placeholder="请输入用户名"
-          >
+        <div class="prompt">{{ promptAccount }}</div>
+        <div class="list">
+          <label for="pwd">密码</label>
+          <div class="input-box">
+            <input
+              v-model="password"
+              id="pwd"
+              type="password"
+              name="password"
+              autocomplete="on"
+              placeholder="请输入用户名"
+            >
+          </div>
         </div>
-      </div>
-      <div class="prompt">{{ promptPassword }}</div>
-      <div class="list">
-        <label for="verify-pwd">确认密码</label>
-        <div class="input-box">
-          <input
-            v-model="verifyPassword"
-            id="verify-pwd"
-            type="password"
-            placeholder="请输入用户名"
-          >
+        <div class="prompt">{{ promptPassword }}</div>
+        <div class="list">
+          <label for="verify-pwd">确认密码</label>
+          <div class="input-box">
+            <input
+              v-model="verifyPassword"
+              id="verify-pwd"
+              type="password"
+              name="verifyPassword"
+              autocomplete="on"
+              placeholder="请输入用户名"
+            >
+          </div>
         </div>
-      </div>
-      <div class="prompt">{{ promptVerifyPassword }}</div>
-      <div class="submit-button" @click="submit">提交</div>
+        <div class="prompt">{{ promptVerifyPassword }}</div>
+        <div class="submit-button" @click="submit">提交</div>
+      </form>
     </div>
   </div>
 </template>
