@@ -7,7 +7,7 @@
       </div>
       <div class="item-box">
         <label>用户名</label>
-        <InputBox v-model:value="form.userName" placeholder="请输入用户名" />
+        <InputBox v-model:value="form.name" placeholder="请输入用户名" />
       </div>
       <div class="item-box">
         <label>手机号码</label>
@@ -79,18 +79,18 @@ export default {
       // 是否激活
       selectStatus: [
         {
-          id: 0,
-          name: '未激活',
+          id: '1',
+          name: '已激活',
         },
         {
-          id: 1,
-          name: '已激活',
+          id: '2',
+          name: '未激活',
         }
       ],
       // 查询条件
       form: {
         account: '',
-        userName: '',
+        name: '',
         phone: '',
         email: '',
         area: '',
@@ -115,6 +115,10 @@ export default {
         {
           name: '名称',
           value: 'name'
+        },
+        {
+          name: '电话',
+          value: 'phone'
         },
         {
           name: '年龄',
@@ -164,7 +168,9 @@ export default {
         page: this.page,
         pageSize: this.pageSize
       });
+      console.log('obj', obj)
       const getApiUsers = await apiUsers(obj)
+      console.log('getApiUsers', getApiUsers)
       if (Array.isArray(getApiUsers.data.list)) {
         this.list = getApiUsers.data.list
         this.total = Number(getApiUsers.data.total)
