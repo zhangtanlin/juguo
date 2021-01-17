@@ -126,7 +126,7 @@ export default {
         },
         {
           name: '区域id',
-          value: 'area_id'
+          value: 'area'
         },
         {
           name: '角色',
@@ -168,9 +168,7 @@ export default {
         page: this.page,
         pageSize: this.pageSize
       });
-      console.log('obj', obj)
       const getApiUsers = await apiUsers(obj)
-      console.log('getApiUsers', getApiUsers)
       if (Array.isArray(getApiUsers.data.list)) {
         this.list = getApiUsers.data.list
         this.total = Number(getApiUsers.data.total)
