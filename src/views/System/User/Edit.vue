@@ -19,7 +19,7 @@
       </div>
       <div class="item-box">
         <label>区域id</label>
-        <InputBox v-model:value="form.area_id" placeholder="请输入区域id" />
+        <InputBox v-model:value="form.area" placeholder="请输入区域id" />
       </div>
       <div class="item-box">
         <label>部门</label>
@@ -47,7 +47,6 @@
       </div>
       <div class="item-box">
         <button class="btn" @click="submit">
-          <i class="icon icon-search"></i>
           提交
         </button>
       </div>
@@ -71,22 +70,23 @@ export default {
       // 是否激活
       selectStatus: [
         {
-          id: 0,
-          name: '否',
+          id: '1',
+          name: '是',
         },
         {
-          id: 1,
-          name: '是',
-        }
+          id: '2',
+          name: '否',
+        },
       ],
+      // 用户id
+      id: this.$route.params.id,
       // 表单
       form: {
-        id: this.$route.params.id,
         account: '',
         name: '',
         phone: '',
         age: '',
-        area_id: '',
+        area: '',
         status: '',
         is_locked: '',
         is_disabled: '',
@@ -102,19 +102,13 @@ export default {
   methods: {
     // 根据id获取列表
     async getListById() {
-      const getApiUserById = await apiUserById({id: this.form.id})
-      this.form.account = getApiUserById.account
-      this.form.account = getApiUserById.account
-      this.form.name = getApiUserById.name
-      this.form.phone = getApiUserById.phone
-      this.form.age = getApiUserById.age
-      this.form.area_id = getApiUserById.area_id
-      this.form.status = getApiUserById.status
-      this.form.is_locked = getApiUserById.is_locked
-      this.form.is_disabled = getApiUserById.is_disabled
-      this.form.department = getApiUserById.department
-      this.form.firm = getApiUserById.firm
-      this.form.roles = getApiUserById.roles
+      const getApiUserById = await apiUserById({id: this.id})
+      if (
+        getApiUserById &&
+        getApiUserById.data
+      ) {
+        this.form = Object.assign({}, this.form, getApiUserById.data)
+      }
     },
     // 修改提交
     async submit() {

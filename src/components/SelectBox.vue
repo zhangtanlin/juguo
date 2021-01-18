@@ -7,7 +7,18 @@
       ]"
     >
       <slot name="title">
-        <span class="selected-text">{{ selected }}</span>
+        <span v-if="!value" class="selected-text">请选择</span>
+        <span v-else class="selected-text">
+
+          <template
+            v-for="(item, index) in list"
+            :key="index"
+          >
+            <span v-if="item.id === value">
+              {{ item.name }}
+            </span>
+          </template>
+        </span>
       </slot>
       <i class="icon-triangle-down" />
       <div class="options-box">
