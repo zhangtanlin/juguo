@@ -33,20 +33,19 @@
       </div>
     </div>
     <div class="active">
-      <router-link
-        to="/system/user/add"
-        class="btn"
-      >
-        <i class="icon-add"></i>
-        新增
-      </router-link>
+      <div class="btn" @click="add()"><i class="icon-add"></i>新增</div>
     </div>
+
+    <!-- 列表行 -->
     <TableBox
       :list="list"
       :list-header="listHeader"
-      :edit="edit"
-      :del="del"
+      @on-edit="edit"
+      @on-detail="det"
+      @on-delete="del"
     />
+
+    <!-- 分页 -->
     <div v-if="total">
       <PaginationBox
         :page="page"
@@ -56,6 +55,14 @@
         :change-size="changeSize"
       />
     </div>
+
+    <!-- 弹出框 -->
+    <popup-box :show="popupShow" @on-change="changePopup">
+      <UserAdd v-if="type==1"/>
+      <UserEdit v-else-if="type==2"/>
+      <UserShow v-else/>
+    </popup-box>
+
   </div>
 </template>
 
@@ -66,13 +73,21 @@ import SelectBox from '@/components/SelectBox.vue'
 import TableBox from '@/components/TableBox'
 import PaginationBox from '@/components/PaginationBox'
 import { removeEmpty } from '@/utils/tools'
+import PopupBox from '@/components/PopupBox.vue'
+import Add from './Add.vue'
+import Edit from './Edit.vue'
+import Show from './Show.vue'
 export default {
-  name: 'User',
+  name: 'UserList',
   components: {
     InputBox,
     SelectBox,
     TableBox,
-    PaginationBox
+    PaginationBox,
+    PopupBox,
+    UserAdd: Add,
+    UserEdit: Edit,
+    UserShow: Show,
   },
   data () {
     return {
@@ -100,8 +115,6 @@ export default {
       page: 1,
       pageSize: 2,
       total: 0,
-      // 弹出框是否显示
-      popupShow: false,
       // 列表头部
       listHeader: [
         {
@@ -139,17 +152,17 @@ export default {
       ],
       // 列表
       list: [],
+      // 弹出框
+      popupShow: false, // 弹出框是否显示
+      type: 0, // 当前显示的内容{0: 详细信息，1:新增，2:编辑}
+      detail: {}, // 详情信息
     }
   },
   mounted() {
     this.getList();
   },
   methods: {
-    /**
-     * 分页
-     * @function changePage 切换页码
-     * @function changeSize 切换每页显示的条数
-     */
+    // 分页
     changePage(page) {
       this.page = page
       this.getList()
@@ -174,18 +187,39 @@ export default {
         this.total = Number(getApiUsers.data.total)
       }
     },
+    // 新增
+    add() {
+      this.type = 1;
+      this.changePopup();
+    },
     // 编辑
     edit(id) {
-      if (id) {
-        this.$router.push(`/system/user/edit/${id}`)
-      }
+      this.list.forEach(element => {
+        if (element.id === id) {
+          this.detail = element;
+        }
+      });
+      this.changePopup();
+      this.type = 2;
+    },
+    // 详情
+    det(id) {
+      this.list.forEach(element => {
+        if (element.id === id) {
+          this.detail = element;
+        }
+      });
+      this.changePopup();
+      this.type = 0;
     },
     // 删除
     del(id) {
-      if (id) {
-        console.log('删除id', id)
-      }
-    }
+      console.log('删除', id);
+    },
+    // 切换弹出框状态
+    changePopup() {
+      this.popupShow = !this.popupShow ?? false;
+    },
   }
 }
 </script>
@@ -193,6 +227,9 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/scss/variables.scss';
 .user {
+  width: 100%;
+  height: 100%;
+  position: relative;
   .active {
     display: flex;
     .btn {

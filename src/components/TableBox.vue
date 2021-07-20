@@ -30,8 +30,9 @@
           >{{ item[obj.value] }}</div>
         </template>
         <div class="table-item">
-          <button class="table-btn" @click="edit(item.id)">编辑</button>
-          <button class="table-btn" @click="del(item.id)">删除</button>
+          <button class="table-btn" @click="onEdit(item.id)">编辑</button>
+          <button class="table-btn" @click="onDetail(item.id)">详情</button>
+          <button class="table-btn" @click="onDelete(item.id)">删除</button>
         </div>
       </div>
     </div>
@@ -71,10 +72,26 @@ export default {
       default: () => {}
     }
   },
-  data() {
-    return {}
+  emits: ['on-edit','on-detail', 'on-delete'],
+  setup(props, context) {
+    // 编辑
+    const onEdit = (id) => {
+      context.emit('on-edit', id);
+    };
+    // 详情
+    const onDetail = (id) => {
+      context.emit('on-detail', id);
+    };
+    // 删除
+    const onDelete = (id) => {
+      context.emit('on-delete', id);
+    };
+    return {
+      onEdit,
+      onDetail,
+      onDelete,
+    }
   },
-  methods: {}
 }
 </script>
 

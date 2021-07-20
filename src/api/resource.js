@@ -9,7 +9,7 @@ import request from '@/utils/axios'
  */
 export const apiMenu = () => {
   return request({
-    url: '/api/resource/menu',
+    url: '/sys/resource/menu',
     method: 'post'
   })
 }

@@ -1,9 +1,10 @@
 <template>
-  <div class="popup">
+  <div class="popup" v-show="show">
+    <div class="popup-mask-layer" @click="change"></div>
     <div class="popup-box">
       <div class="popup-header">
         <div class="title">{{ title }}</div>
-        <div class="btn icon-close"></div>
+        <div class="btn icon-close" @click="change"></div>
       </div>
       <div class="popup-content">
         <slot></slot>
@@ -16,14 +17,25 @@
 export default {
   name: 'Popup',
   props: {
-    // 是否显示
-    show: {
-      type: Boolean,
-      default: true
-    },
+    // 弹出框头部文字
     title: {
       type: String,
       default: '提示'
+    },
+    // 弹出框是否显示
+    show: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  emits: ['on-change'],
+  setup(props, context) {
+    // 方法（切换弹出框状态【调用父组件方法】）
+    const change = () => {
+      context.emit('on-change');
+    }
+    return {
+      change,
     }
   },
 }
@@ -34,18 +46,28 @@ export default {
 .popup {
   width: 100%;
   height: 100%;
-  background: rgba($color: #000000, $alpha: 0.75);
-  display: none;
+  display: flex;
   align-items: center;
   justify-content: center;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   z-index: 1;
+  .popup-mask-layer {
+    width: 100%;
+    height: 100%;
+    background: rgba($color: #000000, $alpha: 0.75);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+  }
   .popup-box {
     padding: 10px;
     background: #fff;
     border-radius: 5px;
+    position: relative;
+    z-index: 3;
     .popup-header {
       height: 30px;
       line-height: 30px;
@@ -54,16 +76,18 @@ export default {
       align-items: center;
       justify-content: space-between;
       .btn {
-        color: #ccc;
+        height: 24px;
+        font-size: 12px;
+        color: #000;
         cursor: pointer;
         &:hover {
-          color: #000;
+          color: #ccc;
         }
       }
     }
   }
   .popup-content {
-
+    
   }
 }
 .popup-show {
