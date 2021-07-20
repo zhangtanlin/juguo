@@ -58,16 +58,23 @@
 
     <!-- 弹出框 -->
     <popup-box :show="popupShow" @on-change="changePopup">
-      <UserAdd v-if="type==1"/>
-      <UserEdit v-else-if="type==2"/>
-      <UserShow v-else/>
+      <UserAdd
+        v-if="type==1"
+        @on-submit="addSubmit"
+      />
+      <UserEdit
+        v-else-if="type==2"
+      />
+      <UserShow
+        v-else
+      />
     </popup-box>
 
   </div>
 </template>
 
 <script>
-import { apiUsers } from '@/api/user'
+import { apiUsers, apiUserAdd } from '@/api/user'
 import InputBox from '@/components/InputBox.vue'
 import SelectBox from '@/components/SelectBox.vue'
 import TableBox from '@/components/TableBox'
@@ -78,7 +85,7 @@ import Add from './Add.vue'
 import Edit from './Edit.vue'
 import Show from './Show.vue'
 export default {
-  name: 'UserList',
+  name: 'List',
   components: {
     InputBox,
     SelectBox,
@@ -191,6 +198,22 @@ export default {
     add() {
       this.type = 1;
       this.changePopup();
+    },
+    // 新增（弹出框-新增-提交）
+    async addSubmit(data) {
+      let tempData = {
+        account: data.account,
+        password: data.password,
+      };
+      const postApiUserAdd = await apiUserAdd(tempData);
+      if (
+        postApiUserAdd &&
+        postApiUserAdd.data
+      ) {
+        console.log('新增成功', data)
+        this.changePopup()
+
+      }
     },
     // 编辑
     edit(id) {

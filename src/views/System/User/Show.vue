@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  name: 'UserShow',
+  name: 'Show',
   data () {
     return {}
   },

@@ -127,8 +127,9 @@ export default {
         align-items: center;
         justify-content: center;
         .table-btn {
-          margin: 5px 5px 5px 0;
-          padding: 2px 7px;
+          width: 50px;
+          padding: 4px;
+          margin-left: 5px;
           font-size: 13px;
           color: #fff;
           background: #ff0000;

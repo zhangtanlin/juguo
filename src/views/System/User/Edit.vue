@@ -60,7 +60,7 @@ import InputBox from '@/components/InputBox.vue'
 import SelectBox from '@/components/SelectBox.vue'
 import { removeEmpty } from '@/utils/tools'
 export default {
-  name: 'User',
+  name: 'Edit',
   components: {
     InputBox,
     SelectBox,

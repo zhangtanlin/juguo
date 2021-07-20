@@ -1,101 +1,93 @@
 <template>
   <div class="add">
     <div class="add-box">
-      <form>
-        <div class="list">
-          <label for="account">用户名</label>
-          <div class="input-box">
-            <input
-              v-model="account"
-              id="account"
-              type="text"
-              name="account"
-              autocomplete="on"
-              placeholder="请输入用户名"
-            >
-          </div>
+      <div class="list">
+        <label for="account">用户名</label>
+        <div class="input-box">
+          <input
+            v-model="formData.account"
+            id="account"
+            type="text"
+            name="account"
+            autocomplete="on"
+            placeholder="请输入用户名"
+          >
         </div>
-        <div class="prompt">{{ promptAccount }}</div>
-        <div class="list">
-          <label for="pwd">密码</label>
-          <div class="input-box">
-            <input
-              v-model="password"
-              id="pwd"
-              type="password"
-              name="password"
-              autocomplete="on"
-              placeholder="请输入用户名"
-            >
-          </div>
+      </div>
+      <div class="prompt">{{ formData.promptAccount }}</div>
+      <div class="list">
+        <label for="pwd">密码</label>
+        <div class="input-box">
+          <input
+            v-model="formData.password"
+            id="pwd"
+            type="password"
+            name="password"
+            autocomplete="on"
+            placeholder="请输入用户名"
+          >
         </div>
-        <div class="prompt">{{ promptPassword }}</div>
-        <div class="list">
-          <label for="verify-pwd">确认密码</label>
-          <div class="input-box">
-            <input
-              v-model="verifyPassword"
-              id="verify-pwd"
-              type="password"
-              name="verifyPassword"
-              autocomplete="on"
-              placeholder="请输入用户名"
-            >
-          </div>
+      </div>
+      <div class="prompt">{{ formData.promptPassword }}</div>
+      <div class="list">
+        <label for="verify-pwd">确认密码</label>
+        <div class="input-box">
+          <input
+            v-model="formData.verifyPassword"
+            id="verify-pwd"
+            type="password"
+            name="verifyPassword"
+            autocomplete="on"
+            placeholder="请输入用户名"
+          >
         </div>
-        <div class="prompt">{{ promptVerifyPassword }}</div>
-        <div class="submit-button" @click="submit">提交</div>
-      </form>
+      </div>
+      <div class="prompt">{{ formData.promptVerifyPassword }}</div>
+      <div class="submit-button" @click="onSubmit">提交</div>
     </div>
   </div>
 </template>
 
 <script>
-import { apiUserAdd } from '@/api/user'
+import { reactive } from '@vue/reactivity'
 export default {
   name: 'Add',
-  data () {
-    return {
+  emits: ['on-submit'],
+  setup(props, context) {
+    // 定义
+    let formData = reactive({
       account: '',
       password: '',
       verifyPassword: '',
       promptAccount: '',
       promptPassword: '',
       promptVerifyPassword: ''
-    }
-  },
-  methods: {
+    });
     // 提交
-    async submit() {
+    const onSubmit = async () => {
       const reg = /^\s*$/g; // 为空
-      let status = true; // 状态
-      if (reg.test(this.account)) {
-        this.promptAccount = '用户名不能为空'
+      let status = true;
+      if (reg.test(formData.account)) {
+        formData.promptAccount = '用户名不能为空'
         status = false
       }
-      if (reg.test(this.password)) {
-        this.promptPassword = '密码不能为空'
+      if (reg.test(formData.password)) {
+        formData.promptPassword = '密码不能为空'
         status = false
       }
-      if (this.password !== this.verifyPassword) {
-        this.promptVerifyPassword = '两次密码输入不一致'
+      if (formData.password !== formData.verifyPassword) {
+        formData.promptVerifyPassword = '两次密码输入不一致'
         status = false
       }
       if (status) {
-        const obj = {
-          account: this.account,
-          password: this.password
-        }
-        const postApiUserAdd = await apiUserAdd(obj)
-        if (
-          postApiUserAdd &&
-          postApiUserAdd.data
-        ) {
-          this.$router.push('/system/user')
-        }
+        context.emit('on-submit', formData)
       }
     }
-  }
+    return {
+      formData,
+      onSubmit,
+    };
+  },
 }
 </script>
 
@@ -107,7 +99,7 @@ export default {
   justify-content: center;
   align-items: center;
   .add-box {
-
+    padding: 20px 0 10px 0;
   }
   .list {
     display: flex;
